@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <!-- <button @click="formatData()">Get Data</button> -->
+    <button @click="fetchByTime()">Get Data</button>
     <chart :generationMix="generationMix" :chartTimes="chartTimes"></chart>
   </div>
 </template>
@@ -42,6 +42,15 @@ export default {
       this.chartTimes['end'] = data.to;
       console.log("Start: ", data.from);
       console.log("End: ", data.to);
+    },
+    fetchByTime: function(from, to){
+      fetch(`https://api.carbonintensity.org.uk/generation/2019-01-20T12:00Z/2019-01-20T12:30Z`)
+      .then(res => res.json())
+      .then(data =>
+        console.log(data)
+        // this.formatData(data.data.generationmix);
+        // this.getTimes(data.data);
+      )
     }
     }
   }

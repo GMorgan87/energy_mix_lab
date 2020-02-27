@@ -1,9 +1,11 @@
 <template lang="html">
   <div class="">
-    <!-- <p>{{generationMix}}</p> -->
+    <p>{{this.chartOptions.chart.title}}</p>
+    <p>Showing Data from {{chartTimes.start}} to {{chartTimes.end}}</p>
     <GChart
     type="PieChart"
     :data="generationMix"
+    :options="chartOptions"
     />
   </div>
 
@@ -15,14 +17,22 @@ export default {
   components: {
     GChart
   },
-  props: ['generationMix'],
+  props: ['generationMix', 'chartTimes'],
   data(){
     return {
-      "dummyData": [['fuel', 'percentage'], ['biomass', 45], ['coal', 55]]
+      chartOptions: {
+        chart: {
+         title: 'Energy Generation Chart',
+       }
+      }
     }
   }
 }
 </script>
 
 <style lang="css" scoped>
+rect {
+  height: 500px;
+}
+
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <button @click="formatData()">Get Data</button>
-    <chart :generationMix="generationMix"></chart>
+    <!-- <button @click="formatData()">Get Data</button> -->
+    <chart :generationMix="generationMix" :chartTimes="chartTimes"></chart>
   </div>
 </template>
 
@@ -15,15 +15,17 @@ export default {
   },
   data(){
     return{
-      generationMix: [["fuel", "Percentage"]]
+      generationMix: [["fuel", "Percentage"]],
+      chartTimes: {start: null,
+                     end: null}
     }
   },
   mounted(){
     fetch('https://api.carbonintensity.org.uk/generation')
     .then(res => res.json())
     .then(data => {
-      this.formatData(data.data.generationmix)
-      console.log(this.generationMix);
+      this.formatData(data.data.generationmix);
+      this.getTimes(data.data);
     })
   },
   methods: {
@@ -34,8 +36,13 @@ export default {
         energyArray.push(energy.perc)
         this.generationMix.push(energyArray);
       }
-
-      }
+    },
+    getTimes: function(data){
+      this.chartTimes['start'] = data.from;
+      this.chartTimes['end'] = data.to;
+      console.log("Start: ", data.from);
+      console.log("End: ", data.to);
+    }
     }
   }
 </script>
